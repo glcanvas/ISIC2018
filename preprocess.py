@@ -26,13 +26,17 @@ def load_image(ind, row, args):
     ### load image
     if row.Class != "fake":
         image_file = image_path + '%s.jpg' % img_id
+        trust_id = img_id
     else:
         image_file = fake_image_path + '%s_semantic_synthesized_image.jpg' % img_id
+        trust_id = img_id
+        img_id = "ISIC_0" + img_id.split("_")[1:]
+
     img = load_img(image_file, target_size=(512, 512), color_mode="rgb")  # this is a PIL image
     img_np = img_to_array(img)
     ### why only 0-255 integers
     img_np = img_np.astype(np.uint8)
-    hdf5_file = h5py.File(save_path + '%s.h5' % img_id, 'w')
+    hdf5_file = h5py.File(save_path + '%s.h5' % trust_id, 'w')
     hdf5_file.create_dataset('img', data=img_np, dtype=np.uint8)
     hdf5_file.close()
 
@@ -47,11 +51,11 @@ def load_image(ind, row, args):
         masks[:, :, i] = m_np[:, :, 0]
         m_np = m_np[:, :, 0, np.newaxis]
         m_np = (m_np / 255).astype('int8')
-        hdf5_file = h5py.File(save_path + '%s_attribute_%s.h5' % (img_id, attr), 'w')
+        hdf5_file = h5py.File(save_path + '%s_attribute_%s.h5' % (trust_id, attr), 'w')
         hdf5_file.create_dataset('img', data=m_np, dtype=np.int8)
         hdf5_file.close()
     masks = (masks / 255).astype('int8')
-    hdf5_file = h5py.File(save_path + '%s_attribute_all.h5' % (img_id), 'w')
+    hdf5_file = h5py.File(save_path + '%s_attribute_all.h5' % (trust_id), 'w')
     hdf5_file.create_dataset('img', data=masks, dtype=np.int8)
     hdf5_file.close()
     # print(img_np.shape,masks.shape)

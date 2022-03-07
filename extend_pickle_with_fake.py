@@ -18,6 +18,11 @@ if __name__ == "__main__":
     for idx, row in train_subset.iterrows():
         df = row.to_frame().T
         df.at[df.index[0], "Class"] = "fake"
+        id_name = df.at[df.index[0], "ID"]
+        index = "1" + id_name.split("_")[1][1:]
+        df.at[df.index[0], "ID"] = "ISIC_" + index
+
+
         fake_train.append(df)
     frame = pd.concat([train_subset, pd.concat(fake_train), test_subset], ignore_index=True)
     frame.to_pickle("/Users/nduginets/PycharmProjects/ISIC2018/data/fake_train_test_id.pickle")
