@@ -230,7 +230,7 @@ class UNet16(nn.Module):
         print("!", x_out_empty_ind1.shape)
         x_out_empty_ind1 = torch.squeeze(x_out_empty_ind1)
         print("!!", x_out_empty_ind1.shape)
-        x_out_empty_ind1 = torch.reshape(x_out_empty_ind1, (1, x_out_empty_ind1.shape[0]))
+        #x_out_empty_ind1 = torch.reshape(x_out_empty_ind1, (1, x_out_empty_ind1.shape[0]))
         #print("!!!", x_out_empty_ind1.shape)
 
         dec5 = self.dec5(torch.cat([center, conv5], 1))
@@ -243,7 +243,7 @@ class UNet16(nn.Module):
         x_out_mask = self.final(dec1)
         x_out_empty_ind2 = nn.MaxPool2d(kernel_size=x_out_mask.size()[2:])(x_out_mask)
         x_out_empty_ind2 = torch.squeeze(x_out_empty_ind2)
-        x_out_empty_ind2 = torch.reshape(x_out_empty_ind2, (1, x_out_empty_ind2.shape[0]))
+        #x_out_empty_ind2 = torch.reshape(x_out_empty_ind2, (1, x_out_empty_ind2.shape[0]))
         #print(x_out_empty_ind.size()) # [8,5,1,1]
 
         #return x_out_mask, x_out_empty_ind1, x_out_empty_ind2
