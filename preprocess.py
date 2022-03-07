@@ -28,9 +28,9 @@ def load_image(ind, row, args):
         image_file = image_path + '%s.jpg' % img_id
         trust_id = img_id
     else:
-        image_file = fake_image_path + '%s_semantic_synthesized_image.jpg' % img_id
         trust_id = img_id
         img_id = "ISIC_0" + img_id.split("_")[1][1:]
+        image_file = fake_image_path + '%s_semantic_synthesized_image.jpg' % img_id
 
     img = load_img(image_file, target_size=(512, 512), color_mode="rgb")  # this is a PIL image
     img_np = img_to_array(img)
