@@ -292,6 +292,7 @@ def main():
                 #weight[:, 4] = weight[:, 4] * 4
                 #weight = weight * train_mask_ind + 1
                 #weight = weight.to(device).type(torch.cuda.FloatTensor)
+                print(outputs_mask_ind1.shape, train_mask_ind.shape)
                 loss2 = F.binary_cross_entropy_with_logits(outputs_mask_ind1, train_mask_ind)
                 loss3 = F.binary_cross_entropy_with_logits(outputs_mask_ind2, train_mask_ind)
                 #loss3 = criterion(outputs_mask_ind2, train_mask_ind)
