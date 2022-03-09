@@ -230,7 +230,8 @@ class UNet16(nn.Module):
         print("!", x_out_empty_ind1.shape)
         x_out_empty_ind1 = torch.squeeze(x_out_empty_ind1)
         print("!!", x_out_empty_ind1.shape)
-        x_out_empty_ind1 = torch.reshape(x_out_empty_ind1, (x_out_empty_ind1.shape[0], x_out_empty_ind1.shape[1]))
+        if len(x_out_empty_ind1.shape) == 1:
+            x_out_empty_ind1 = torch.reshape(x_out_empty_ind1, (1, x_out_empty_ind1.shape[0]))
         print("!!!", x_out_empty_ind1.shape)
 
         dec5 = self.dec5(torch.cat([center, conv5], 1))
