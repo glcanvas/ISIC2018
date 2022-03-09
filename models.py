@@ -244,8 +244,8 @@ class UNet16(nn.Module):
         x_out_mask = self.final(dec1)
         x_out_empty_ind2 = nn.MaxPool2d(kernel_size=x_out_mask.size()[2:])(x_out_mask)
         x_out_empty_ind2 = torch.squeeze(x_out_empty_ind2)
-        x_out_empty_ind2 = torch.reshape(x_out_empty_ind2, (x_out_empty_ind2.shape[0], x_out_empty_ind2.shape[1]))
-        #print(x_out_empty_ind.size()) # [8,5,1,1]
+        if len(x_out_empty_ind2.shape) == 1:
+            x_out_empty_ind2 = torch.reshape(x_out_empty_ind2, (1, x_out_empty_ind2.shape[0]))
 
         #return x_out_mask, x_out_empty_ind1, x_out_empty_ind2
         return x_out_mask, x_out_empty_ind1, x_out_empty_ind2
